@@ -21,7 +21,7 @@ export const todoSlice = createSlice({
             }]
 
         },
-        tabActiveReducer: (state, action) => {
+        tabActiveReducer: (state) => {
             state.tabActive = !state.tabActive
             // توی یه خط مینویسم خطا میده
         },
@@ -31,11 +31,12 @@ export const todoSlice = createSlice({
         },
 
         EditTodoReducer: (state, action) => {
+            // console.log(action.payload.editText);
             state.todosList = state.todosList.map((item) => {
-                return item.id === action.payload
+                return item.id === action.payload.todoId
                     ? {
                         ...item,
-                        task: action.payload.task
+                        task: action.payload.editText
                     }
                     : item
             })
@@ -46,7 +47,7 @@ export const todoSlice = createSlice({
                 return item.id === action.payload
                     ? {
                         ...item,
-                        status:
+                        status: !item.status
                     }
                     : item
             })

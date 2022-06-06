@@ -13,15 +13,15 @@ function ToggleStatusTask({todoId}) {
     const toggleStatusHandler = () => {
         // console.log(selected);
         dispatch(changeStatusTodoReducer(todoId))
-        ToastNotification(`successfully added task`, 'success');
+        ToastNotification(`successfully done/undone task`, 'success');
     }
 
     return (
         <>
             {
-                selected.status === 0
-                    ? <button className="btn btn-success" onClick={toggleStatusHandler}> done</button>
-                    : <button className="btn btn-warning" onClick={toggleStatusHandler}> unDone</button>
+                !selected.status
+                    ? <button className="btn btn-success btn-sm m-2" onClick={toggleStatusHandler}> done</button>
+                    : <button className="btn btn-warning btn-sm m-2" onClick={toggleStatusHandler}> unDone</button>
             }
         </>
     )
