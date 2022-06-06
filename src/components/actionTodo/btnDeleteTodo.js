@@ -1,17 +1,25 @@
+import React from "react";
+import {useDispatch} from "react-redux";
+import {deleteTodoReducer} from "../../store/slices/todoSlice";
+import ToastNotification from './../../helpers/ToastNotification'
 
-function AddTodoButton(){
+function DeleteTodoButton({todoId}){
 
-    const addTodoHandler=()=>{
-        console.log('addTodoHandler');
+    const dispatch = useDispatch()
+
+    const deleteTodoHandler=()=>{
+        const result = window.confirm("آیا از حذف مطمئن هستید؟")
+        if (result) {
+            dispatch(deleteTodoReducer(todoId))
+            ToastNotification(`شماره کاربری ${todoId} به درستی حذف شد.`, 'success');
+        }
+
     }
     return(
         <>
-            <div className="form-group">
-                <input type="text" name='txt-todo' className="form-control mx-sm-3" placeholder="i want to do ..."/>
-                <button className="btn btn-primary" onClick={addTodoHandler}>add</button>
-            </div>
+            <button type="button" className="btn btn-danger btn-sm ml-1" onClick={deleteTodoHandler}>delete</button>
         </>
     )
 }
 
-export default AddTodoButton;
+export default DeleteTodoButton;

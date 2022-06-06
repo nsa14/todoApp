@@ -1,12 +1,32 @@
-function NavTab(){
-    return(
+import {tabActiveReducer} from "../../store/slices/todoSlice";
+import {useDispatch, useSelector} from "react-redux";
+
+function NavTab() {
+
+    let tabActive = useSelector(state => state.todos.tabActive);
+
+    const todosList = useSelector(state => state.todos.todosList);
+    const dispatch = useDispatch()
+
+    const todoUndone = todosList.filter(item => item.status === 0);
+    const todoDone = todosList.filter(item => item.status === 1);
+
+    const toggleHandler = () => {
+        dispatch(tabActiveReducer())
+    }
+    return (
         <>
+            {/*tabActive is : {tabActive.toString()}*/}
             <nav className="col-6 mb-3">
                 <div className="nav nav-tabs" id="nav-tab" role="tablist">
-                    <a className="nav-item nav-link active font-weight-bold" id="nav-home-tab">undone <span
-                        className="badge badge-secondary">9</span></a>
-                    <a className="nav-item nav-link font-weight-bold" id="nav-profile-tab">done <span
-                        className="badge badge-success">9</span></a>
+                    <a onClick={() => toggleHandler()}
+                       className={`nav-item nav-link font-weight-bold ${tabActive ? "" : "active"}`}
+                       id="nav-home-tab">undone <span
+                        className="badge badge-secondary"> {todoUndone.length}</span></a>
+                    <a onClick={() => toggleHandler()}
+                       className={`nav-item nav-link font-weight-bold ${tabActive ? "active" : ""}`}
+                       id="nav-profile-tab">done <span
+                        className="badge badge-success"> {todoDone.length}</span></a>
                 </div>
             </nav>
         </>
