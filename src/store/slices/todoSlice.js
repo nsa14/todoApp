@@ -17,7 +17,7 @@ export const todoSlice = createSlice({
             state.todosList = [...state.todosList, {
                 id: Date.now(),
                 task: action.payload,
-                status: 0   //0 is undone   1 is done
+                status: false   //false is undone   true is done
             }]
 
         },
@@ -25,8 +25,31 @@ export const todoSlice = createSlice({
             state.tabActive = !state.tabActive
             // توی یه خط مینویسم خطا میده
         },
+
         deleteTodoReducer: (state, action) => {
             state.todosList = state.todosList.filter((item) => item.id !== action.payload)
+        },
+
+        EditTodoReducer: (state, action) => {
+            state.todosList = state.todosList.map((item) => {
+                return item.id === action.payload
+                    ? {
+                        ...item,
+                        task: action.payload.task
+                    }
+                    : item
+            })
+        },
+
+        changeStatusTodoReducer: (state, action) => {
+            state.todosList = state.todosList.map((item) => {
+                return item.id === action.payload
+                    ? {
+                        ...item,
+                        status:
+                    }
+                    : item
+            })
         },
 
 
@@ -37,6 +60,12 @@ export const todoSlice = createSlice({
 })
 
 // Action creators are generated for each case reducer function
-export const {tabActiveReducer, addTodoReducer, deleteTodoReducer} = todoSlice.actions;
+export const {
+    tabActiveReducer,
+    addTodoReducer,
+    deleteTodoReducer,
+    EditTodoReducer,
+    changeStatusTodoReducer
+} = todoSlice.actions;
 
 export default todoSlice.reducer

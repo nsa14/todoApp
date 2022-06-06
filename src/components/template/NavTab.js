@@ -8,8 +8,10 @@ function NavTab() {
     const todosList = useSelector(state => state.todos.todosList);
     const dispatch = useDispatch()
 
-    const todoUndone = todosList.filter(item => item.status === 0);
-    const todoDone = todosList.filter(item => item.status === 1);
+    console.log(todosList)
+
+    const todoUndone = todosList.filter(item => item.status === false);
+    const todoDone = todosList.filter(item => item.status === true);
 
     const toggleHandler = () => {
         dispatch(tabActiveReducer())

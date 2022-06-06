@@ -1,17 +1,24 @@
+import {EditTodoReducer} from "../../store/slices/todoSlice";
+import ToastNotification from "../../helpers/ToastNotification";
+import {useDispatch, useSelector} from "react-redux";
+import React from "react";
 
-function AddTodoButton(){
+function EditTodoButton({todoId}){
 
-    const addTodoHandler=()=>{
-        console.log('addTodoHandler');
+    const todosList = useSelector(state => state.todos.todosList);
+    const selected = todosList.filter((item) => item.id === todoId)[0]
+    const dispatch = useDispatch()
+
+    const editTodoHandler = () => {
+        // console.log(selected);
+        dispatch(EditTodoReducer(todoId))
+        ToastNotification(`successfully edited task`, 'success');
     }
     return(
         <>
-            <div className="form-group">
-                <input type="text" name='txt-todo' className="form-control mx-sm-3" placeholder="i want to do ..."/>
-                <button className="btn btn-primary" onClick={addTodoHandler}>add</button>
-            </div>
+                <button type="button" className="btn btn-info btn-sm" onClick={editTodoHandler}>edit</button>
         </>
     )
 }
 
-export default AddTodoButton;
+export default EditTodoButton;
